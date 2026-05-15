@@ -22,13 +22,11 @@ SECRET_KEY = os.getenv(
 
 DEBUG = True
 
-```python id="m3kq2v"
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-08a05.up.railway.app',
 ]
-```
 
 
 # APPLICATIONS
