@@ -21,29 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-# for best-practices.
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Please set SECRET_KEY environment variable in your production environment
-# (e.g. Heroku).
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-c843nsnq46asy1tv)%)t%9&0-q=%2&s^4#x=l0va_&&$yw!x98')
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    'django-insecure-c843nsnq46asy1tv)%)t%9&0-q=%2&s^4#x=l0va_&&$yw!x98'
+)
 
-# Automatically determine environment by detecting if DATABASE_URL variable.
-# DATABASE_URL is provided by Heroku if a database add-on is added
-# (e.g. Heroku Postgres).
-PRODUCTION = os.getenv('DATABASE_URL') is not None
-
-# SECURITY WARNING: don't run with debug turned on in production!
-# If you want to enable debugging on Heroku for learning purposes,
-# set this to True.
-DEBUG = not PRODUCTION
-
-HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME', '')
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-if not PRODUCTION:
-    ALLOWED_HOSTS += ['.localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -55,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'main',
     'sosmed',
 ]
@@ -62,6 +49,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -94,24 +82,20 @@ WSGI_APPLICATION = 'my_project.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# Set database settings automatically using DATABASE_URL.
-if PRODUCTION:
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=600, ssl_require=True
+    'default': dj_database_url.config(
+        default=os.getenv(
+            'DATABASE_PRIVATE_URL',
+            f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+        ),
+        conn_max_age=600,
+        ssl_require=False,
     )
+}
 
 
 # Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -130,8 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
-# Feel free to change these according to your needs.
 
 LANGUAGE_CODE = 'en-us'
 
@@ -144,25 +126,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# Static files
 
 STATIC_URL = '/static/'
 
-# This is the directory for storing `collectstatic` results.
-# This shouldn't be included in your Git repository.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# You can use this directory to store project-wide static files.
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Make sure the directories exist to prevent errors when doing `collectstatic`.
 for directory in [*STATICFILES_DIRS, STATIC_ROOT]:
     directory.mkdir(exist_ok=True)
 
-# Enable compression and caching features of whitenoise.
-# You can remove this if it causes problems on your setup.
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
