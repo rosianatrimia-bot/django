@@ -156,4 +156,19 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # DEFAULT AUTO FIELD
 
+import os
+
+if os.getenv("CREATE_SUPERUSER") == "1":
+    from django.contrib.auth import get_user_model
+
+    User = get_user_model()
+
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="mia@example.com",
+            password="1234"
+        
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
