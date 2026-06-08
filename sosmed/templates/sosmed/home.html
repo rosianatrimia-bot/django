@@ -1,25 +1,20 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="container text-center mt-5">
-    <h1>Sosial Media</h1>
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
 
-    <div class="mt-4">
-        <a href="{% url 'sosmed:instagram' %}" class="btn btn-primary m-2">
-            Instagram
-        </a>
+{% block contents %}
 
-        <a href="{% url 'sosmed:tiktok' %}" class="btn btn-dark m-2">
-            TikTok
-        </a>
+<div class="container">
+    <h2>{{ page_title }}</h2>
 
-        <a href="{% url 'sosmed:facebook' %}" class="btn btn-info m-2">
-            Facebook
-        </a>
-
-        <a href="{% url 'sosmed:twitter' %}" class="btn btn-secondary m-2">
-            X / Twitter
-        </a>
+    <div class="menu-sosmed">
+        <a href="{% url 'sosmed:list' %}" class="menu-card">Instagram</a>
+        <a href="{% url 'sosmed:tiktok' %}" class="menu-card">TikTok</a>
+        <a href="{% url 'sosmed:facebook' %}" class="menu-card">Facebook</a>
+        <a href="{% url 'sosmed:twitter' %}" class="menu-card">X / Twitter</a>
     </div>
 </div>
-{% endblock %}
+
+{% endblock contents %}
