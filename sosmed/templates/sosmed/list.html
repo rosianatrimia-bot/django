@@ -90,6 +90,10 @@
 
 </div>
 
+{% if messages %}
+    {{ messages|json_script:"django-messages" }}
+{% endif %}
+
 <script>
 function confirmDelete(event, url) {
     event.preventDefault();
@@ -111,19 +115,25 @@ function confirmDelete(event, url) {
 
     return false;
 }
-</script>
 
-{% if messages %}
-    {% for message in messages %}
-        <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const messagesTag = document.getElementById("django-messages");
+
+    if (messagesTag) {
+        const messages = JSON.parse(messagesTag.textContent);
+
+        messages.forEach(function (message) {
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
-                text: '{{ message|escapejs }}',
-                confirmButtonColor: '#7aa874'
+                text: message.message,
+                confirmButtonColor: '#7aa874',
+                timer: 2000,
+                showConfirmButton: false
             });
-        </script>
-    {% endfor %}
-{% endif %}
+        });
+    }
+});
+</script>
 
 {% endblock contents %}
