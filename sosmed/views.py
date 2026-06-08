@@ -78,7 +78,7 @@ def update(request, update_id):
     if request.method == 'POST':
         if akun_form.is_valid():
             akun_form.save()
-            messages.success(request, 'Data berhasil diupdate')
+            messages.success(request, 'Data berhasil diperbarui')
             return redirect('sosmed:list')
 
     context = {
