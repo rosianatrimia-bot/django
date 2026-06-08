@@ -361,3 +361,33 @@ body.dark-mode .container {
     background-color: #2a2a2a;
     color: white;
 }
+
+.left-tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-add,
+.btn-back {
+    display: inline-block;
+    padding: 12px 18px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-add {
+    background-color: #7aa874;
+}
+
+.btn-back {
+    background-color: #6c757d;
+}
+
+.btn-add:hover,
+.btn-back:hover {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+}
