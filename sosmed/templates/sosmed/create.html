@@ -7,6 +7,7 @@
 {% block contents %}
 
 <div class="container">
+
     <h2>{{ page_title }}</h2>
 
     <form method="POST" class="form-box">
@@ -28,15 +29,20 @@
         </div>
 
         <div class="form-action">
+
             <button type="submit" class="btn-simpan">
                 Simpan
             </button>
 
-            <a href="{% url 'sosmed:list' %}" class="btn-kembali">
+            <a href="{% url 'sosmed:list' platform=platform %}"
+               class="btn-kembali">
                 Kembali
             </a>
+
         </div>
+
     </form>
+
 </div>
 
 {% endblock contents %}
