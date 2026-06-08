@@ -17,11 +17,11 @@
                 🌙
             </button>
 
-            <a href="{% url 'sosmed:create' %}" class="btn-add">
+            <a href="{% url 'sosmed:create' %}" class="btn btn-success ml-2">
                 + Tambah Akun
             </a>
 
-            <a href="{% url 'sosmed:home' %}" class="btn-back">
+            <a href="{% url 'sosmed:home' %}" class="btn btn-secondary ml-2">
                 ← Kembali
             </a>
         </div>
@@ -111,19 +111,21 @@ function confirmDelete(event, url) {
 
     return false;
 }
-</script>
 
-{% if messages %}
-    {% for message in messages %}
-        <script>
+document.addEventListener("DOMContentLoaded", function () {
+    {% if messages %}
+        {% for message in messages %}
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
-                text: '{{ message }}',
-                confirmButtonColor: '#7aa874'
+                text: '{{ message|escapejs }}',
+                confirmButtonColor: '#7aa874',
+                timer: 2000,
+                showConfirmButton: false
             });
-        </script>
-    {% endfor %}
-{% endif %}
+        {% endfor %}
+    {% endif %}
+});
+</script>
 
 {% endblock contents %}
