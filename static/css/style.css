@@ -306,3 +306,58 @@ tr:hover {
     align-items: center;
     gap: 10px;
 }
+
+.menu-container {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 40px;
+    text-align: center;
+}
+
+.menu-sosmed {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.menu-card {
+    width: 280px;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #7aa874;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.menu-card:hover {
+    color: white;
+    text-decoration: none;
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+
+.mode-toggle {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    background-color: #333;
+    color: white;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+body.dark-mode {
+    background-color: #1b1b1b;
+    color: white;
+}
+
+body.dark-mode .container {
+    background-color: #2a2a2a;
+    color: white;
+}
