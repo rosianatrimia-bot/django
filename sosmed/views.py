@@ -4,6 +4,13 @@ from .models import Instagram
 from .forms import InstagramForm
 
 
+def home(request):
+    context = {
+        'page_title': 'Sosial Media',
+    }
+    return render(request, 'sosmed/home.html', context)
+
+
 def create(request):
     akun_form = InstagramForm(request.POST or None)
 
@@ -32,11 +39,32 @@ def list_instagram(request):
         semua_akun = Instagram.objects.all()
 
     context = {
-        'page_title': 'Sosial Media',
+        'page_title': 'Instagram',
         'semua_akun': semua_akun,
     }
 
     return render(request, 'sosmed/list.html', context)
+
+
+def tiktok(request):
+    context = {
+        'page_title': 'TikTok',
+    }
+    return render(request, 'sosmed/platform.html', context)
+
+
+def facebook(request):
+    context = {
+        'page_title': 'Facebook',
+    }
+    return render(request, 'sosmed/platform.html', context)
+
+
+def twitter(request):
+    context = {
+        'page_title': 'X / Twitter',
+    }
+    return render(request, 'sosmed/platform.html', context)
 
 
 def update(request, update_id):
