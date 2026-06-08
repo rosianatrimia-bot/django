@@ -1,7 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Instagram
-from .forms import InstagramForm
+from .models import AkunSosmed
+from .forms import AkunSosmedForm
+
+
+PLATFORM_NAMES = {
+    'instagram': 'Instagram',
+    'tiktok': 'TikTok',
+    'facebook': 'Facebook',
+    'twitter': 'X / Twitter',
+}
 
 
 def home(request):
@@ -11,85 +19,78 @@ def home(request):
     return render(request, 'sosmed/home.html', context)
 
 
-def create(request):
-    akun_form = InstagramForm(request.POST or None)
-
-    if request.method == 'POST':
-        if akun_form.is_valid():
-            akun_form.save()
-            messages.success(request, 'Data berhasil disimpan')
-            return redirect('sosmed:list')
-
-    context = {
-        "page_title": "Tambah akun",
-        "akun_form": akun_form,
-    }
-
-    return render(request, 'sosmed/create.html', context)
-
-
-def list_instagram(request):
+def list_sosmed(request, platform):
     keyword = request.GET.get('keyword')
+    semua_akun = AkunSosmed.objects.filter(platform=platform)
 
     if keyword:
-        semua_akun = Instagram.objects.filter(
-            username__icontains=keyword
-        )
-    else:
-        semua_akun = Instagram.objects.all()
+        semua_akun = semua_akun.filter(username__icontains=keyword)
 
     context = {
-        'page_title': 'Instagram',
+        'page_title': PLATFORM_NAMES.get(platform, 'Sosial Media'),
+        'platform': platform,
         'semua_akun': semua_akun,
     }
 
     return render(request, 'sosmed/list.html', context)
 
 
-def tiktok(request):
+def create(request, platform):
+    akun_form = AkunSosmedForm(request.POST or None)
+
+    if request.method == 'POST':
+        if akun_form.is_valid():
+            akun = akun_form.save(commit=False)
+            akun.platform = platform
+            akun.save()
+            messages.success(request, 'Data berhasil disimpan')
+            return redirect('sosmed:list', platform=platform)
+
     context = {
-        'page_title': 'TikTok',
+        'page_title': f'Tambah Akun {PLATFORM_NAMES.get(platform, "Sosial Media")}',
+        'platform': platform,
+        'akun_form': akun_form,
     }
-    return render(request, 'sosmed/platform.html', context)
+
+    return render(request, 'sosmed/create.html', context)
 
 
-def facebook(request):
-    context = {
-        'page_title': 'Facebook',
-    }
-    return render(request, 'sosmed/platform.html', context)
+def update(request, platform, update_id):
+    akun_update = get_object_or_404(
+        AkunSosmed,
+        id=update_id,
+        platform=platform
+    )
 
-
-def twitter(request):
-    context = {
-        'page_title': 'X / Twitter',
-    }
-    return render(request, 'sosmed/platform.html', context)
-
-
-def update(request, update_id):
-    akun_update = Instagram.objects.get(id=update_id)
-
-    akun_form = InstagramForm(
+    akun_form = AkunSosmedForm(
         request.POST or None,
         instance=akun_update
     )
 
     if request.method == 'POST':
         if akun_form.is_valid():
-            akun_form.save()
+            akun = akun_form.save(commit=False)
+            akun.platform = platform
+            akun.save()
             messages.success(request, 'Data berhasil diperbarui')
-            return redirect('sosmed:list')
+            return redirect('sosmed:list', platform=platform)
 
     context = {
-        "page_title": "Update akun",
-        "akun_form": akun_form,
+        'page_title': f'Update Akun {PLATFORM_NAMES.get(platform, "Sosial Media")}',
+        'platform': platform,
+        'akun_form': akun_form,
     }
 
     return render(request, 'sosmed/create.html', context)
 
 
-def delete(request, delete_id):
-    Instagram.objects.filter(id=delete_id).delete()
+def delete(request, platform, delete_id):
+    akun_delete = get_object_or_404(
+        AkunSosmed,
+        id=delete_id,
+        platform=platform
+    )
+
+    akun_delete.delete()
     messages.success(request, 'Data berhasil dihapus')
-    return redirect('sosmed:list')
+    return redirect('sosmed:list', platform=platform)
