@@ -14,10 +14,21 @@
     <h2>{{ page_title }}</h2>
 
     <div class="menu-sosmed">
-        <a href="{% url 'sosmed:list' %}" class="menu-card">Instagram</a>
-        <a href="{% url 'sosmed:tiktok' %}" class="menu-card">TikTok</a>
-        <a href="{% url 'sosmed:facebook' %}" class="menu-card">Facebook</a>
-        <a href="{% url 'sosmed:twitter' %}" class="menu-card">X / Twitter</a>
+        <a href="{% url 'sosmed:list' platform='instagram' %}" class="menu-card">
+            Instagram
+        </a>
+
+        <a href="{% url 'sosmed:list' platform='tiktok' %}" class="menu-card">
+            TikTok
+        </a>
+
+        <a href="{% url 'sosmed:list' platform='facebook' %}" class="menu-card">
+            Facebook
+        </a>
+
+        <a href="{% url 'sosmed:list' platform='twitter' %}" class="menu-card">
+            X / Twitter
+        </a>
     </div>
 </div>
 
