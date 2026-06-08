@@ -13,32 +13,20 @@
     <div class="top-bar">
 
         <div class="left-tools">
-
-            <button
-                onclick="toggleDarkMode()"
-                class="btn-dark"
-                id="toggleBtn"
-            >
+            <button onclick="toggleDarkMode()" class="btn-dark" id="toggleBtn">
                 🌙
             </button>
 
-            <a
-                href="{% url 'sosmed:create' %}"
-                class="btn-tambah"
-            >
+            <a href="{% url 'sosmed:create' %}" class="btn-add">
                 + Tambah Akun
             </a>
 
-            <a 
-                href="{% url 'sosmed:home' %}" 
-                class="btn btn-secondary">
+            <a href="{% url 'sosmed:home' %}" class="btn-back">
                 ← Kembali
             </a>
-
         </div>
 
         <form method="GET" class="search-box">
-
             <input
                 type="text"
                 name="keyword"
@@ -50,19 +38,14 @@
                 Cari
             </button>
 
-            <a
-                href="{% url 'sosmed:list' %}"
-                class="btn-reset"
-            >
+            <a href="{% url 'sosmed:list' %}" class="btn-reset">
                 Reset
             </a>
-
         </form>
 
     </div>
 
     <table>
-
         <thead>
             <tr>
                 <th>No</th>
@@ -74,9 +57,7 @@
         </thead>
 
         <tbody>
-
             {% for akun in semua_akun %}
-
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ akun.nama_depan }}</td>
@@ -84,10 +65,7 @@
                 <td>{{ akun.username }}</td>
 
                 <td>
-                    <a
-                        href="{% url 'sosmed:update' akun.id %}"
-                        class="btn-aksi edit"
-                    >
+                    <a href="{% url 'sosmed:update' akun.id %}" class="btn-aksi edit">
                         Edit
                     </a>
 
@@ -100,19 +78,14 @@
                     </a>
                 </td>
             </tr>
-
             {% empty %}
-
             <tr>
                 <td colspan="5" style="text-align: center;">
                     Data tidak ditemukan
                 </td>
             </tr>
-
             {% endfor %}
-
         </tbody>
-
     </table>
 
 </div>
@@ -135,6 +108,8 @@ function confirmDelete(event, url) {
             window.location.href = url;
         }
     });
+
+    return false;
 }
 </script>
 
