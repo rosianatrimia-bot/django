@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
+
+{% block contents %}
+
+<div class="container">
+    <h2>{{ page_title }}</h2>
+
+    <p>Halaman {{ page_title }} belum berisi data.</p>
+
+    <a href="{% url 'sosmed:home' %}" class="btn-kembali">
+        Kembali
+    </a>
+</div>
+
+{% endblock contents %}
